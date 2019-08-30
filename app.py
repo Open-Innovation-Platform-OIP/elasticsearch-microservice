@@ -20,8 +20,8 @@ PORT = 8080
 
 @app.route('/', methods=['GET'])
 def index():
-    results = es.get(index='my_playlist', doc_type='title', id=6)
-    return jsonify(results['_source'])
+    results = es.get(index='my_playlist', doc_type='song', id=6)
+    return "working"
 
 
 @app.route('/insert_data', methods=['POST'])
