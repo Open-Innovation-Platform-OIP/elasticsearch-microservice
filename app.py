@@ -47,13 +47,14 @@ def insert_data():
 
 @app.route('/search', methods=['POST'])
 def search():
-    print("request===", request)
-    # keyword = request.json['keyword']
+    print("request===", request.json)
+    req = request.json
+    keyword = req["keyword"]
 
     body = {
         "query": {
             "multi_match": {
-                "query": "sdf",
+                "query": keyword,
                 "fields": ["description", "title"]
             }
         }
