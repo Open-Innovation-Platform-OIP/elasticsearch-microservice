@@ -48,12 +48,12 @@ def insert_data():
 @app.route('/search', methods=['POST'])
 def search():
     print("request===", request)
-    keyword = request.json['keyword']
+    # keyword = request.json['keyword']
 
     body = {
         "query": {
             "multi_match": {
-                "query": keyword,
+                "query": "test",
                 "fields": ["description", "title"]
             }
         }
