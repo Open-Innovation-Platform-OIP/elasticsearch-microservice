@@ -25,20 +25,22 @@ def index():
     return jsonify(results['_source'])
 
 
-@app.route('/insert_data', methods=['POST'])
+@app.route('/insert_problem_index', methods=['POST'])
 def insert_data():
-    slug = request.form['slug']
-    title = request.form['title']
-    content = request.form['content']
+    # slug = request.form['slug']
+    # title = request.form['title']
+    # content = request.form['content']
 
-    body = {
-        'slug': slug,
-        'title': title,
-        'content': content,
+    trigger_payload = request.json
 
-    }
+    problem_id = trigger_payload["event"]["data"]["new"]["id"]
 
-    result = es.index(index='contents', doc_type='title', id=slug, body=body)
+    problem = trigger_payload["event"]["data"]["new"]
+
+    body = problem
+
+    result = es.index(index='problems', doc_type='problem',
+                      id=problem_id, body=body)
 
     return jsonify(result)
 
