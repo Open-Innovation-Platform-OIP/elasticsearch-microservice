@@ -57,7 +57,8 @@ def search():
                 "query": keyword,
                 "fields": ["description", "title"]
             }
-        }
+        },
+        "analyzer": "synonym_analyzer"
     }
 
     res = es.search(index="problems", body=body)
