@@ -53,12 +53,12 @@ def search():
         "query": {
             "multi_match": {
                 "query": keyword,
-                "fields": ["content", "title"]
+                "fields": ["description", "title"]
             }
         }
     }
 
-    res = es.search(index="contents", doc_type="title", body=body)
+    res = es.search(index="problems", doc_type="problem", body=body)
 
     return jsonify(res['hits']['hits'])
 
