@@ -20,7 +20,7 @@ PORT = 8080
 
 @app.route('/', methods=['GET'])
 def index():
-    results = es.get(index='contents', doc_type='title', id='my-new-slug')
+    results = es.get(index='my_playlist', doc_type='title', id='my-new-slug')
     return jsonify(results['_source'])
 
 
