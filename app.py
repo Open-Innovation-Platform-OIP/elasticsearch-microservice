@@ -3,13 +3,13 @@ from flask import Flask, request, jsonify
 import json
 from waitress import serve
 from elasticsearch import Elasticsearch
-from ssl import create_default_context
+# from ssl import create_default_context
 
-context = create_default_context(cafile="path/to/cafile.pem")
+# context = create_default_context(cafile="path/to/cafile.pem")
 
 
 es = Elasticsearch("https://157.245.111.179:9200",
-                   ssl_context=context, http_auth=('admin', 'admin'))
+                   http_auth=('admin', 'admin'))
 
 
 app = Flask(__name__)
