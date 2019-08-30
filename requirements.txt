@@ -1,3 +1,4 @@
 Flask
 elasticsearch
 waitress
+requests

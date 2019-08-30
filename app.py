@@ -2,14 +2,14 @@ import os
 from flask import Flask, request, jsonify
 import json
 from waitress import serve
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, RequestsHttpConnection
 # from ssl import create_default_context
 
 # context = create_default_context(cafile="path/to/cafile.pem")
 
 
-es = Elasticsearch("https://157.245.111.179:9200",
-                   http_auth=('admin', 'admin'), ca_certs=False, verify_certs=False)
+es = Elasticsearch([{'host': "https://157.245.111.179:9200"}],
+                   http_auth=('admin', 'admin'), use_ssl=True, verify_certs=False)
 es.info()
 
 
