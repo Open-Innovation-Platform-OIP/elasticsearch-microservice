@@ -61,7 +61,7 @@ def search():
 
     }
 
-    res = es.search(index="problems", body=body)
+    res = es.search(index="problems_test", body=body)
 
     return jsonify(res['hits']['hits'])
 
