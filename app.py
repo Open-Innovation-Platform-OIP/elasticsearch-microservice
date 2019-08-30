@@ -9,7 +9,7 @@ from elasticsearch import Elasticsearch
 
 
 es = Elasticsearch("https://157.245.111.179:9200",
-                   http_auth=('admin', 'admin'), verify_certs=False, ca_certs=False,)
+                   http_auth=('admin', 'admin'), ca_certs=False, verify_certs=False)
 
 
 app = Flask(__name__)
