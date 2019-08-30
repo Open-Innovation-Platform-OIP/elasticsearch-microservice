@@ -39,7 +39,7 @@ def insert_data():
 
     body = problem
 
-    result = es.index(index='problems', doc_type='problem',
+    result = es.index(index='problems_test', doc_type='problem',
                       id=problem_id, body=body)
 
     return jsonify(result)
