@@ -53,7 +53,7 @@ def search():
     body = {
         "query": {
             "multi_match": {
-                "query": "test",
+                "query": "sdf",
                 "fields": ["description", "title"]
             }
         }
