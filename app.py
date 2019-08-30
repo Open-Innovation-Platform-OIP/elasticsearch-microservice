@@ -47,8 +47,8 @@ def insert_data():
 
 @app.route('/search', methods=['POST'])
 def search():
-    print(request.form['keyword'], "request")
-    keyword = request.form['keyword']
+    # print(request.form['keyword'], "request")
+    keyword = request.json['keyword']
 
     body = {
         "query": {
