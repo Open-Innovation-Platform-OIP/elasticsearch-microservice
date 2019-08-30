@@ -8,7 +8,7 @@ from elasticsearch import Elasticsearch, RequestsHttpConnection
 # context = create_default_context(cafile="path/to/cafile.pem")
 
 
-es = Elasticsearch([{'host': "https://157.245.111.179"}], port=9200, connection_class=RequestsHttpConnection,
+es = Elasticsearch([{'host': "157.245.111.179"}], port=9200, connection_class=RequestsHttpConnection,
                    http_auth=('admin', 'admin'), use_ssl=True, verify_certs=False)
 es.info()
 
