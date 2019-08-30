@@ -8,7 +8,7 @@ from elasticsearch import Elasticsearch
 # context = create_default_context(cafile="path/to/cafile.pem")
 
 
-es = Elasticsearch('host': "https://157.245.111.179:9200",
+es = Elasticsearch("https://157.245.111.179:9200",
                    http_auth=('admin', 'admin'), verify_certs=False)
 es.info()
 
