@@ -47,13 +47,13 @@ def insert_data():
 
 @app.route('/search', methods=['POST'])
 def search():
-    print(request.form['keyword'], "request")
-    keyword = request.form['keyword']
+    # print(request.form['keyword'], "request")
+    # keyword = request.form['keyword']
 
     body = {
         "query": {
             "multi_match": {
-                "query": keyword,
+                "query": "test",
                 "fields": ["description", "title"]
             }
         }
