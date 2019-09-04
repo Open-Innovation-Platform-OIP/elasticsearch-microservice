@@ -63,9 +63,10 @@ def search():
 
                 "must": [{
                     "match": {"title": keyword},
-                    "match": {"is_draft": True}
 
-                }]
+
+                }],
+                "filter": {"term": {"is_draft": True}}
             }
 
             # "bool": {
