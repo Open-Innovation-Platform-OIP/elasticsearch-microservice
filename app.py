@@ -62,7 +62,7 @@ def search():
             "bool": {
 
                 "must": {
-                    "term": {"title": keyword, "is_draft": True}
+                    "term": {"title": keyword, "description": keyword}
                 }
             }
 
