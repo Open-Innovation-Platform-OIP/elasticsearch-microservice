@@ -44,7 +44,8 @@ def insert_data():
         result = es.index(index='problems_test',
                           body=body)
 
-    return jsonify(result)
+        return jsonify(result)
+    return "return for insert"
 
 
 @app.route('/update_problem_index', methods=['POST'])
