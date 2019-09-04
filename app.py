@@ -87,7 +87,8 @@ def update_data():
             result = es.index(index='problems_test', id=id,
                               body=body)
 
-    return jsonify(result)
+            return jsonify(result)
+    return res
 
 
 @app.route('/search', methods=['POST'])
