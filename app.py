@@ -84,8 +84,8 @@ def update_data():
 
         body = problem
 
-        result = es.put(index='problems_test', id=id,
-                        body=body)
+        result = es.index(index='problems_test', id=id,
+                          body=body)
 
     return jsonify(result)
 
