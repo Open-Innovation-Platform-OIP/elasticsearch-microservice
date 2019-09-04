@@ -62,10 +62,10 @@ def search():
             "bool": {
 
                 "must": [{
-                    "term": {"title": keyword}
+                    "terms": {"title": keyword}
 
                 },
-                    {"term": {"description": keyword}}
+                    {"terms": {"description": keyword}}
                 ]
             }
 
