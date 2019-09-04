@@ -53,10 +53,16 @@ def search():
 
     body = {
         "query": {
-            "multi_match": {
-                "query": keyword,
-                "fields": ["description", "title"]
+
+            "bool": {
+                "must": [
+                    {"terms": {"title": keyword, "is_draft": True}}
+                ],
             }
+            # "multi_match": {
+            #     "query": keyword,
+            #     "fields": ["description", "title"]
+            # }
         }
 
     }
