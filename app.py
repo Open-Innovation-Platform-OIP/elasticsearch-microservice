@@ -79,6 +79,7 @@ def update_data():
 
     res = es.search(index="problems_test", body=search_body)["hits"]["hits"]
     body = problem
+    problem["type"] = "problem"
 
     if not problem["is_draft"]:
         if res and len(res) and res[0]["_id"]:
