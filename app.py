@@ -61,10 +61,11 @@ def search():
 
             "bool": {
 
-                "must": {
-                    "term": {"title": keyword}
+                "must": [{
+                    "match": {"title": keyword},
+                    "match": {"is_draft": False}
 
-                }
+                }]
             }
 
             # "bool": {
