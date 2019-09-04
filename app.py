@@ -67,7 +67,7 @@ def search():
 
 
                 }],
-                "filter": {"term": {"is_draft": True}}
+                "filter": {"term": {"type": "problem"}}
             }
 
             # "bool": {
