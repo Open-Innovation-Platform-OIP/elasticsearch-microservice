@@ -34,6 +34,7 @@ def insert_data():
     trigger_payload = request.json
 
     problem = trigger_payload["event"]["data"]["new"]
+
     if not problem["is_draft"]:
 
         problem["type"] = "problem"
@@ -42,6 +43,49 @@ def insert_data():
 
         result = es.index(index='problems_test',
                           body=body)
+
+    return jsonify(result)
+
+
+@app.route('/update_problem_index', methods=['POST'])
+def update_data():
+
+    # slug = request.form['slug']
+    # title = request.form['title']
+    # content = request.form['content']
+
+    trigger_payload = request.json
+
+    problem = trigger_payload["event"]["data"]["new"]
+
+    body = {
+        "query": {
+
+            "bool": {
+
+                "must": [{
+                    "match": {"id": problem["id"]},
+
+
+                }],
+                "filter": {"term": {"type": "problem"}}
+            }
+
+
+        }
+
+    }
+
+    res = es.search(index="problems_test", body=body)["hits"]["hits"]
+    if len(res[0]) and res[0]["_id"]:
+        id = res[0]["_id"]
+
+    if not problem["is_draft"]:
+
+        body = problem
+
+        result = es.put(index='problems_test', id=id,
+                        body=body)
 
     return jsonify(result)
 
