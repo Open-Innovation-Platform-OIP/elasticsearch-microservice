@@ -88,7 +88,7 @@ def update_data():
                               body=body)
 
             return jsonify(result)
-    return res
+    return "return for insert"
 
 
 @app.route('/search', methods=['POST'])
