@@ -77,7 +77,7 @@ def update_data():
     }
 
     res = es.search(index="problems_test", body=body)["hits"]["hits"]
-    if len(res[0]) and res[0]["_id"]:
+    if res and len(res) and res[0]["_id"]:
         id = res[0]["_id"]
 
     if not problem["is_draft"]:
