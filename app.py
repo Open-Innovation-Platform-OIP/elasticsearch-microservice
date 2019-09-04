@@ -80,12 +80,12 @@ def update_data():
     if res and len(res) and res[0]["_id"]:
         id = res[0]["_id"]
 
-    if not problem["is_draft"]:
+        if not problem["is_draft"]:
 
-        body = problem
+            body = problem
 
-        result = es.index(index='problems_test', id=id,
-                          body=body)
+            result = es.index(index='problems_test', id=id,
+                              body=body)
 
     return jsonify(result)
 
