@@ -59,7 +59,7 @@ def update_data():
 
     problem = trigger_payload["event"]["data"]["new"]
 
-    body = {
+    search_body = {
         "query": {
 
             "bool": {
@@ -77,19 +77,21 @@ def update_data():
 
     }
 
-    res = es.search(index="problems_test", body=body)["hits"]["hits"]
-    if res and len(res) and res[0]["_id"]:
-        id = res[0]["_id"]
+    res = es.search(index="problems_test", body=search_body)["hits"]["hits"]
+    body = problem
 
-        if not problem["is_draft"]:
-
-            body = problem
+    if not problem["is_draft"]:
+        if res and len(res) and res[0]["_id"]:
+            id = res[0]["_id"]
 
             result = es.index(index='problems_test', id=id,
                               body=body)
 
-            return jsonify(result)
-    return "return for insert"
+    else:
+        result = es.index(index='problems_test',
+                          body=body)
+
+    return jsonify(result)
 
 
 @app.route('/search', methods=['POST'])
