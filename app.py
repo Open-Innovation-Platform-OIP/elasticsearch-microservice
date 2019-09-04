@@ -63,7 +63,7 @@ def search():
 
                 "must": [{
                     "match": {"title": keyword},
-                    "match": {"is_draft": False}
+                    "match": {"is_draft": True}
 
                 }]
             }
