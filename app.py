@@ -33,15 +33,15 @@ def insert_data():
 
     trigger_payload = request.json
 
-    problem_id = trigger_payload["event"]["data"]["new"]["id"]
-
     problem = trigger_payload["event"]["data"]["new"]
-    problem["type"] = "problem"
+    if not problem["is_draft"]:
 
-    body = problem
+        problem["type"] = "problem"
 
-    result = es.index(index='problems_test',
-                      body=body)
+        body = problem
+
+        result = es.index(index='problems_test',
+                          body=body)
 
     return jsonify(result)
 
