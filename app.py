@@ -191,7 +191,7 @@ def index_user():
 
 
 @app.route('/global_search', methods=['POST'])
-def search():
+def global_search():
     print("request===", request.json)
     req = request.json
     keyword = req["keyword"]
@@ -224,6 +224,34 @@ def search():
         "problems": problem_results,
         "solutions": solution_results
     }
+
+    results = jsonify(results)
+    results.status_code = 200
+
+    return results
+
+
+@app.route('/search_problems', methods=['POST'])
+def problem_search():
+
+    req = request.json
+    keyword = req["keyword"]
+
+    results = search_problems(keyword)
+
+    results = jsonify(results)
+    results.status_code = 200
+
+    return results
+
+
+@app.route('/search_solutions', methods=['POST'])
+def solution_search():
+
+    req = request.json
+    keyword = req["keyword"]
+
+    results = search_solutions(keyword)
 
     results = jsonify(results)
     results.status_code = 200
