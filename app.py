@@ -219,13 +219,16 @@ def search():
     solution_results = search_solutions(keyword)
     problem_results = search_problems(keyword)
 
-    result = {
+    results = {
         "users": user_results,
         "problems": problem_results,
         "solutions": solution_results
     }
 
-    return jsonify(result)
+    results = jsonify(results)
+    results.status_code = 200
+
+    return jsonify(results)
 
 
 if __name__ == "__main__":
