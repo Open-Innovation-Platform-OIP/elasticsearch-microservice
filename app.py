@@ -136,9 +136,9 @@ def index_problem():
             result = es.index(index='problems_test', id=id,
                               body=body)
 
-    else:
-        result = es.index(index='problems_test',
-                          body=body)
+        else:
+            result = es.index(index='problems_test',
+                              body=body)
 
     return jsonify(result)
 
@@ -160,9 +160,9 @@ def index_solution():
             result = es.index(index='problems_test', id=id,
                               body=body)
 
-    else:
-        result = es.index(index='problems_test',
-                          body=body)
+        else:
+            result = es.index(index='problems_test',
+                              body=body)
 
     return jsonify(result)
 
