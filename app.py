@@ -64,7 +64,7 @@ def search_problems(keyword):
 
     res = es.search(index="problems_test", body=body)
 
-    return jsonify(res['hits']['hits'])
+    return res['hits']['hits']
 
 
 def search_solutions(keyword):
@@ -89,7 +89,7 @@ def search_solutions(keyword):
 
     res = es.search(index="problems_test", body=body)
 
-    return jsonify(res['hits']['hits'])
+    return res['hits']['hits']
 
 
 @app.route('/', methods=['GET'])
