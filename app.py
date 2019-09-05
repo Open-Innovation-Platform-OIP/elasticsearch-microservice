@@ -228,7 +228,7 @@ def search():
     results = jsonify(results)
     results.status_code = 200
 
-    return jsonify(results)
+    return results
 
 
 if __name__ == "__main__":
