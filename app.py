@@ -18,6 +18,80 @@ app = Flask(__name__)
 PORT = 8080
 
 
+def search_index(id, type):
+    search_body = {
+        "query": {
+
+            "bool": {
+
+                "must": [{
+                    "match": {"id": id},
+
+
+                }],
+                "filter": {"term": {"type": type}}
+            }
+
+
+        }
+
+    }
+
+    result = es.search(index="problems_test", body=search_body)["hits"]["hits"]
+    return result
+
+
+def search_problems(keyword):
+
+    body = {
+        "query": {
+
+
+            "bool": {
+
+                "must": [{
+                    "match": {"title": keyword},
+
+
+                }],
+                "filter": {"term": {"type": "problem"}}
+            }
+
+
+        }
+
+    }
+
+    res = es.search(index="problems_test", body=body)
+
+    return jsonify(res['hits']['hits'])
+
+
+def search_solutions(keyword):
+    body = {
+        "query": {
+
+
+            "bool": {
+
+                "must": [{
+                    "match": {"title": keyword},
+
+
+                }],
+                "filter": {"term": {"type": "solution"}}
+            }
+
+
+        }
+
+    }
+
+    res = es.search(index="problems_test", body=body)
+
+    return jsonify(res['hits']['hits'])
+
+
 @app.route('/', methods=['GET'])
 def index():
     results = es.get(index='my_playlist', doc_type='song', id=6)
@@ -27,9 +101,6 @@ def index():
 
 @app.route('/insert_problem_index', methods=['POST'])
 def insert_data():
-    # slug = request.form['slug']
-    # title = request.form['title']
-    # content = request.form['content']
 
     trigger_payload = request.json
 
@@ -49,41 +120,18 @@ def insert_data():
 
 
 @app.route('/update_problem_index', methods=['POST'])
-def update_data():
-
-    # slug = request.form['slug']
-    # title = request.form['title']
-    # content = request.form['content']
+def index_problem():
 
     trigger_payload = request.json
 
     problem = trigger_payload["event"]["data"]["new"]
-
-    search_body = {
-        "query": {
-
-            "bool": {
-
-                "must": [{
-                    "match": {"id": problem["id"]},
-
-
-                }],
-                "filter": {"term": {"type": "problem"}}
-            }
-
-
-        }
-
-    }
-
-    res = es.search(index="problems_test", body=search_body)["hits"]["hits"]
+    search_result = search_index(problem["id"], "problem")
     body = problem
     problem["type"] = "problem"
 
     if not problem["is_draft"]:
-        if res and len(res) and res[0]["_id"]:
-            id = res[0]["_id"]
+        if search_result and len(search_result) and search_result[0]["_id"]:
+            id = search_result[0]["_id"]
 
             result = es.index(index='problems_test', id=id,
                               body=body)
@@ -95,7 +143,54 @@ def update_data():
     return jsonify(result)
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/solution_index', methods=['POST'])
+def index_solution():
+
+    trigger_payload = request.json
+
+    solution = trigger_payload["event"]["data"]["new"]
+    search_result = search_index(solution["id"], "solution")
+    body = solution
+    solution["type"] = "solution"
+
+    if not solution["is_draft"]:
+        if search_result and len(search_result) and search_result[0]["_id"]:
+            id = search_result[0]["_id"]
+
+            result = es.index(index='problems_test', id=id,
+                              body=body)
+
+    else:
+        result = es.index(index='problems_test',
+                          body=body)
+
+    return jsonify(result)
+
+
+@app.route('/user_index', methods=['POST'])
+def index_user():
+
+    trigger_payload = request.json
+
+    user = trigger_payload["event"]["data"]["new"]
+    search_result = search_index(user["id"], "user")
+    body = user
+    user["type"] = "user"
+
+    if search_result and len(search_result) and search_result[0]["_id"]:
+        id = search_result[0]["_id"]
+
+        result = es.index(index='problems_test', id=id,
+                          body=body)
+
+    else:
+        result = es.index(index='problems_test',
+                          body=body)
+
+    return jsonify(result)
+
+
+@app.route('/global_search', methods=['POST'])
 def search():
     print("request===", request.json)
     req = request.json
@@ -104,34 +199,33 @@ def search():
     body = {
         "query": {
 
-            # "multi_match": {
-            #     "query": keyword,
-            #     "fields": ["description", "title"]
-            # }
 
             "bool": {
 
                 "must": [{
-                    "match": {"title": keyword},
+                    "match": {"name": keyword},
 
 
                 }],
-                "filter": {"term": {"type": "problem"}}
+                "filter": {"term": {"type": "user"}}
             }
 
-            # "bool": {
-            #     "must": [
-            #         {"is_draft": True}
-            #     ]
-            # }
 
         }
 
     }
 
-    res = es.search(index="problems_test", body=body)
+    user_results = es.search(index="problems_test", body=body)['hits']['hits']
+    solution_results = search_solutions(keyword)
+    problem_results = search_problems(keyword)
 
-    return jsonify(res['hits']['hits'])
+    result = {
+        "users": user_results,
+        "problems": problem_results,
+        "solutions": solution_results
+    }
+
+    return jsonify(result)
 
 
 if __name__ == "__main__":
