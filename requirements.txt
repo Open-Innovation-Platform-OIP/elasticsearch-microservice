@@ -2,3 +2,4 @@ Flask
 elasticsearch
 waitress
 requests
+flask-cors

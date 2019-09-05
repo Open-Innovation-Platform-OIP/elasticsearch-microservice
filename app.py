@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 import json
 from waitress import serve
 from elasticsearch import Elasticsearch, RequestsHttpConnection
+from flask_cors import CORS
 # from ssl import create_default_context
 
 # context = create_default_context(cafile="path/to/cafile.pem")
@@ -14,6 +15,7 @@ es.info()
 
 
 app = Flask(__name__)
+CORS(app)
 
 PORT = 8080
 
