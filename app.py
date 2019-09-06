@@ -121,7 +121,7 @@ def insert_data():
     return "return for insert"
 
 
-@app.route('/update_problem_index', methods=['POST'])
+@app.route('/problem_index', methods=['POST'])
 def index_problem():
 
     trigger_payload = request.json
