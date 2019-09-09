@@ -98,7 +98,7 @@ def search_problems(keyword):
 
     search_results = json.loads(graphqlClient.execute(problems_query))[
         "data"]["problems"]
-    return jsonify(search_results)
+    return search_results
 
 
 def search_solutions(keyword):
