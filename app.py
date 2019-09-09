@@ -52,7 +52,7 @@ def search_problems(keyword):
             "bool": {
 
                 "must": [{
-                    "match": {"title": keyword, "description": keyword}
+                    "match": {"title": keyword}
 
 
 
@@ -78,7 +78,7 @@ def search_solutions(keyword):
             "bool": {
 
                 "must": [{
-                    "match": {"title": keyword, "description": keyword}
+                    "match": {"title": keyword}
 
 
 
