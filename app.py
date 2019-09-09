@@ -52,8 +52,8 @@ def search_problems(keyword):
             "bool": {
 
                 "must": [{
-                    "match": {"title": keyword},
-                    "match": {"description": keyword}
+                    "match": {"title": keyword, "description": keyword}
+
 
 
                 }],
@@ -78,8 +78,8 @@ def search_solutions(keyword):
             "bool": {
 
                 "must": [{
-                    "match": {"title": keyword},
-                    "match": {"description": keyword}
+                    "match": {"title": keyword, "description": keyword}
+
 
 
 
