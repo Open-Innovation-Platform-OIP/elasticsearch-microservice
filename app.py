@@ -39,7 +39,7 @@ def search_index(id, type):
 
     }
 
-    result = es.search(index="problems_test", body=search_body)["hits"]["hits"]
+    result = es.search(index="index_data", body=search_body)["hits"]["hits"]
     return result
 
 
@@ -64,7 +64,7 @@ def search_problems(keyword):
 
     }
 
-    res = es.search(index="problems_test", body=body)
+    res = es.search(index="index_data", body=body)
 
     return res['hits']['hits']
 
@@ -89,7 +89,7 @@ def search_solutions(keyword):
 
     }
 
-    res = es.search(index="problems_test", body=body)
+    res = es.search(index="index_data", body=body)
 
     return res['hits']['hits']
 
@@ -114,7 +114,7 @@ def insert_data():
 
         body = problem
 
-        result = es.index(index='problems_test',
+        result = es.index(index='index_data',
                           body=body)
 
         return jsonify(result)
@@ -135,11 +135,11 @@ def index_problem():
         if search_result and len(search_result) and search_result[0]["_id"]:
             id = search_result[0]["_id"]
 
-            result = es.index(index='problems_test', id=id,
+            result = es.index(index='index_data', id=id,
                               body=body)
 
         else:
-            result = es.index(index='problems_test',
+            result = es.index(index='index_data',
                               body=body)
 
     return jsonify(result)
@@ -159,11 +159,11 @@ def index_solution():
         if search_result and len(search_result) and search_result[0]["_id"]:
             id = search_result[0]["_id"]
 
-            result = es.index(index='problems_test', id=id,
+            result = es.index(index='index_data', id=id,
                               body=body)
 
         else:
-            result = es.index(index='problems_test',
+            result = es.index(index='index_data',
                               body=body)
 
     return jsonify(result)
@@ -182,11 +182,11 @@ def index_user():
     if search_result and len(search_result) and search_result[0]["_id"]:
         id = search_result[0]["_id"]
 
-        result = es.index(index='problems_test', id=id,
+        result = es.index(index='index_data', id=id,
                           body=body)
 
     else:
-        result = es.index(index='problems_test',
+        result = es.index(index='index_data',
                           body=body)
 
     return jsonify(result)
@@ -217,7 +217,7 @@ def global_search():
 
     }
 
-    user_results = es.search(index="problems_test", body=body)['hits']['hits']
+    user_results = es.search(index="index_data", body=body)['hits']['hits']
     solution_results = search_solutions(keyword)
     problem_results = search_problems(keyword)
 
