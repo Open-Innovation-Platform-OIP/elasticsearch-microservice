@@ -53,6 +53,7 @@ def search_problems(keyword):
 
                 "must": [{
                     "match": {"title": keyword},
+                    "match": {"description": keyword}
 
 
                 }],
@@ -78,6 +79,8 @@ def search_solutions(keyword):
 
                 "must": [{
                     "match": {"title": keyword},
+                    "match": {"description": keyword}
+
 
 
                 }],
