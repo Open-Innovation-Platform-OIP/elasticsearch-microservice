@@ -55,11 +55,6 @@ def search_problems(keyword):
                     "match": {"title": keyword},
 
 
-                },
-                    {
-                    "match": {"description": keyword},
-
-
                 }],
                 "filter": {"term": {"type": "problem"}}
             }
@@ -83,11 +78,6 @@ def search_solutions(keyword):
 
                 "must": [{
                     "match": {"title": keyword},
-
-
-                },
-                    {
-                    "match": {"description": keyword},
 
 
                 }],
