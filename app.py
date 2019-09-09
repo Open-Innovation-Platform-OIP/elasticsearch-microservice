@@ -4,6 +4,13 @@ import json
 from waitress import serve
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from flask_cors import CORS
+from graphqlclient import GraphQLClient
+
+
+graphqlClient = GraphQLClient(os.environ['HASURA_GRAPHQL_URL'])
+graphqlClient.inject_token(
+    os.environ['HASURA_GRAPHQL_ADMIN_SECRET'], 'x-hasura-admin-secret')
+
 # from ssl import create_default_context
 
 # context = create_default_context(cafile="path/to/cafile.pem")
@@ -44,6 +51,7 @@ def search_index(id, type):
 
 
 def search_problems(keyword):
+    results_id_array = []
 
     body = {
         "query": {
@@ -65,13 +73,36 @@ def search_problems(keyword):
 
     }
 
-    res = es.search(index="index_data", body=body)
+    res = es.search(index="index_data", body=body)["hits"]["hits"]
+    for problem in res:
+        results_id_array.append(problem["_source"]["id"])
 
-    return res['hits']['hits']
+    problems_query = '''
+                        {
+            problems(where:{id:{_in:%s}}){
+
+            id
+            title
+            description
+            problem_voters{
+                user_id
+            }
+             problem_watchers{
+                user_id
+            }
+            problem_validations{
+                user_id
+            }
+            }
+        ''' % (results_id_array)
+
+    return jsonify(json.loads(graphqlClient.execute(problems_query))[
+        "data"]["problems"][0])
 
 
 def search_solutions(keyword):
     body = {
+
         "query": {
 
 

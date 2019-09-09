@@ -3,3 +3,4 @@ elasticsearch
 waitress
 requests
 flask-cors
+graphqlclient
