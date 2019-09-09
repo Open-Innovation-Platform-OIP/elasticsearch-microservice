@@ -98,6 +98,7 @@ def search_problems(keyword):
 
     search_results = json.loads(graphqlClient.execute(problems_query))[
         "data"]["problems"]
+    print("====", search_results)
     return search_results
 
 
