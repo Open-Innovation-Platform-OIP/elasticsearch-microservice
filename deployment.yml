@@ -1,36 +1,36 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: oip-es
+  name: oip-es-prod
 spec:
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: oip-es
+    app: oip-es-prod
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oip-es
+  name: oip-es-prod
 spec:
   selector:
     matchLabels:
-      app: oip-es
+      app: oip-es-prod
   replicas: 1
   template:
     metadata:
       labels:
-        app: oip-es
+        app: oip-es-prod
     spec:
       containers:
-      - name: oip-es
-        image: socialalphaoip/elasticsearch-microservice:dev
+      - name: oip-es-prod
+        image: socialalphaoip/elasticsearch-microservice:prod
         ports:
         - containerPort: 8080
         env:
           - name: HASURA_GRAPHQL_URL
-            value: https://sa-dev.dev.jaagalabs.com/v1/graphql
+            value: http://oip-hasura-prod/v1/graphql
           - name: HASURA_GRAPHQL_ADMIN_SECRET
             value: 1SocialAlpha
 ---
